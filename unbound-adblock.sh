@@ -19,7 +19,7 @@
 mkdir /tmp/unbound-adblock
 cd /tmp/unbound-adblock || exit 99
 ftp https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts && \
-awk 'BEGIN { OFS = "" } NF == 2 && $1 == "0.0.0.0" { print "local-zone: \"", $2, "\" redirect"; print "local-data: \"", $2, " A 0.0.0.0\"" }' hosts > adblock.conf
+awk 'BEGIN { OFS = "" } NF == 2 && $1 == "0.0.0.0" { print "local-zone: \"", $2, "\" static" }' hosts > adblock.conf
 mv /tmp/unbound-adblock/adblock.conf /tmp/adblock.conf
 doas mv /tmp/adblock.conf /var/unbound/etc/
 doas rcctl reload unbound
