@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Copyright 2018 Jordan Geoghegan
 
 # Permission to use, copy, modify, and/or distribute this software for any 
@@ -15,7 +17,7 @@
 # Download and parse StevenBlack hosts file into unbound compatible format
 
 mkdir /tmp/unbound-adblock
-cd /tmp/unbound-adblock
+cd /tmp/unbound-adblock || exit 99
 ftp https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts && \
 awk 'BEGIN { OFS = "" } NF == 2 && $1 == "0.0.0.0" { print "local-zone: \"", $2, "\" redirect"; print "local-data: \"", $2, " A 0.0.0.0\"" }' hosts > adblock.conf
 mv /tmp/unbound-adblock/adblock.conf /tmp/adblock.conf
